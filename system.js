@@ -1268,25 +1268,25 @@ case 'stiker': {
     break;
 
 case 'take' :{
-if (!args.join(" ")) return replygcxeon(`?`)
+if (!args.join(" ")) return reply(`?`)
 const swn = args.join(" ")
-const global.packname = swn.split("|")[0]
-const global.author = swn.split("|")[1]
+const pcknm = swn.split("|")[0]
+const atnm = swn.split("|")[1]
 if (m.quoted.isAnimated === true) {
 conn.downloadAndSaveMediaMessage(quoted, "gifee")
-conn.sendMessage(m.chat, {sticker:fs.readFileSync("gifee.webp")}, m, { packname: global.packname, author: global.author })
+conn.sendMessage(m.chat, {sticker:fs.readFileSync("gifee.webp")}, m, { packname: pcknm, author: atnm })
 } else if (/image/.test(mime)) {
 let media = await quoted.download()
-let encmedia = await conn.sendImageAsSticker(m.chat, media, m, { packname: global.packname, author: global.author })
+let encmedia = await conn.sendImageAsSticker(m.chat, media, m, { packname: pcknm, author: atnm })
 } else if (/video/.test(mime)) {
 if ((quoted.msg || quoted).seconds > 11) return reply('Maximum 10 Seconds!')
 let media = await quoted.download()
-let encmedia = await conn.sendVideoAsSticker(m.chat, media, m, { packname: global.packname, author: global.author })
+let encmedia = await conn.sendVideoAsSticker(m.chat, media, m, { packname: pcknm, author: atnm })
 } else {
 reply(`Photo/Video?`)
 }
 }
-break;
+break
            
       case'get':{
         if (!/^https?:\/\//.test(text)) return reply(`mana url nya? contoh ${prefix + command} https://tiktok.com`);
