@@ -474,6 +474,7 @@ If you find an error or want to upgrade premium plan contact the owner.
  ▢ ${prefix}brat
  ▢ ${prefix}qc
  ▢ ${prefix}sticker
+ ▢ ${prefix}take
  ▢ ${prefix}telestick
 
 — owner
@@ -1265,7 +1266,28 @@ case 'stiker': {
         }
     }
     break;
-            
+
+case 'take' :{
+if (!args.join(" ")) return replygcxeon(`?`)
+const swn = args.join(" ")
+const global.packname = swn.split("|")[0]
+const global.author = swn.split("|")[1]
+if (m.quoted.isAnimated === true) {
+conn.downloadAndSaveMediaMessage(quoted, "gifee")
+conn.sendMessage(m.chat, {sticker:fs.readFileSync("gifee.webp")}, m, { packname: global.packname, author: global.author })
+} else if (/image/.test(mime)) {
+let media = await quoted.download()
+let encmedia = await conn.sendImageAsSticker(m.chat, media, m, { packname: global.packname, author: global.author })
+} else if (/video/.test(mime)) {
+if ((quoted.msg || quoted).seconds > 11) return reply('Maximum 10 Seconds!')
+let media = await quoted.download()
+let encmedia = await conn.sendVideoAsSticker(m.chat, media, m, { packname: global.packname, author: global.author })
+} else {
+reply(`Photo/Video?`)
+}
+}
+break;
+           
       case'get':{
         if (!/^https?:\/\//.test(text)) return reply(`mana url nya? contoh ${prefix + command} https://tiktok.com`);
         const ajg = await fetch(text);
