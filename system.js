@@ -502,19 +502,31 @@ If you find an error or want to upgrade premium plan contact the owner.
 
 — tools
  ▢ ${prefix}spam-ngl
- ▢ ${prefix}tovn [ ✘ ]
  ▢ ${prefix}get
  ▢ ${prefix}pinterest
  ▢ ${prefix}tourl
  ▢ ${prefix}toimg
 
 — ai
- ▢ ${prefix}vocal [ ✘ ]
  ▢ ${prefix}remini
  ▢ ${prefix}openai
  ▢ ${prefix}ai
  ▢ ${prefix}gemini
  ▢ ${prefix}chatgpt
+
+— audio
+ ▢ ${prefix}bass
+ ▢ ${prefix}blown
+ ▢ ${prefix}deep
+ ▢ ${prefix}earrape
+ ▢ ${prefix}fast
+ ▢ ${prefix}fat
+ ▢ ${prefix}nightcore
+ ▢ ${prefix}reverse
+ ▢ ${prefix}robot
+ ▢ ${prefix}slow
+ ▢ ${prefix}smooth
+ ▢ ${prefix}squirrel
 
 — fun
  ▢ ${prefix}cekkhodam
