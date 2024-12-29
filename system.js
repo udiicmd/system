@@ -541,13 +541,7 @@ If you find an error or want to upgrade premium plan contact the owner.
  ▢ ${prefix}jadian
  ▢ ${prefix}cekpacar
  ▢ ${prefix}werewolf/ww
-
-— confess
- ▢ ${prefix}menfess
- ▢ ${prefix}balasmenfess
- ▢ ${prefix}tolakmenfess
- ▢ ${prefix}stopmenfess
-
+ 
 — jadibot
  ▢ ${prefix}jadibot
  ▢ ${prefix}listjadibot
@@ -629,94 +623,6 @@ case "afk":{
 }
 break;
 
-case 'confess': case 'confes': case 'menfes': case 'menfess': {
-    conn.menfes = conn.menfes ?? {};
-    const session = Object.values(conn.menfes).find(v => v.state === 'CHATTING' && [v.a, v.b].includes(m.sender));
-    if (session) {
-        const target = session.a === m.sender ? session.b : session.a;
-        await conn.sendMessage(target, {
-            text: `📩 Pesan baru dari @${m.sender.split('@')[0]}:\n\n${m.text}`,
-            mentions: [m.sender],
-        });
-        reply("Pesan diteruskan.");
-        return;
-    }
-    const roof = Object.values(conn.menfes).find(menpes => [menpes.a, menpes.b].includes(m.sender));
-    if (roof) return reply("Kamu masih berada dalam sesi menfess");
-    if (m.isGroup) return reply("Fitur hanya tersedia di private chat!");
-    if (!text) return reply(`Kirim perintah ${prefix + command} nama|nomor|pesan\n\nContoh:\n${prefix + command} ${pushname}|628xxx|Menfess nih`);
-    if (!text.includes('|')) return reply("Format salah! Gunakan format: nama|nomor|pesan");
-
-    let [namaNya, nomorNya, pesanNya] = text.split('|');
-    nomorNya = nomorNya.replace(/^0/, '62');
-    if (isNaN(nomorNya)) return reply("Nomor tidak valid! Pastikan hanya menggunakan angka.");
-
-    const yoi = `Hi ada menfess nih buat kamu\n\nDari: ${namaNya}\nPesan: ${pesanNya}\n\nKetik:\n${prefix}balasmenfess -- Untuk menerima menfess\n${prefix}tolakmenfess -- Untuk menolak menfess\n\n_Pesan ini dikirim oleh bot._`;
-    const tod = await getBuffer('https://telegra.ph/file/c8fdfc8426f5f60b48cca.jpg');
-
-    const id = m.sender;
-    conn.menfes[id] = {
-        id,
-        a: m.sender,
-        b: `${nomorNya}@s.whatsapp.net`,
-        state: 'WAITING',
-    };
-
-    await conn.sendMessage(`${nomorNya}@s.whatsapp.net`, { image: tod, caption: yoi });
-    reply("Pesan berhasil dikirim ke nomor tujuan. Semoga dibalas ya!");
-}
-break;
-case 'balasmenfess': {
-    conn.menfes = conn.menfes ?? {};
-    const roof = Object.values(conn.menfes).find(menpes => [menpes.a, menpes.b].includes(m.sender));
-    if (!roof) return reply("Belum ada sesi menfess");
-
-    const room = Object.values(conn.menfes).find(room => [room.a, room.b].includes(m.sender) && room.state === 'WAITING');
-    if (!room) return reply("Tidak ada sesi menfess yang sedang menunggu");
-
-    const other = [room.a, room.b].find(user => user !== m.sender);
-    room.b = m.sender;
-    room.state = 'CHATTING';
-    conn.menfes[room.id] = { ...room };
-
-    await conn.sendMessage(other, {
-        text: `_@${m.sender.split("@")[0]} telah menerima menfess kamu, sekarang kamu bisa chat lewat bot ini._\n\n*NOTE:* Ketik .stopmenfess untuk berhenti.`,
-        mentions: [m.sender],
-    });
-    reply("Menfess diterima, sekarang kamu bisa chat!");
-    m.reply("Silakan balas pesan langsung di chat ini. Semua pesan akan diteruskan.");
-}
-break;
-
-case 'tolakmenfess': {
-    conn.menfes = conn.menfes ?? {};
-    const roof = Object.values(conn.menfes).find(menpes => [menpes.a, menpes.b].includes(m.sender));
-    if (!roof) return reply("Belum ada sesi menfess");
-
-    const other = [roof.a, roof.b].find(user => user !== m.sender);
-    await conn.sendMessage(other, {
-        text: `_Maaf, @${m.sender.split("@")[0]} menolak menfess kamu._`,
-        mentions: [m.sender],
-    });
-    reply("Menfess berhasil ditolak.");
-    delete conn.menfes[roof.id];
-}
-break;
-case 'stopmenfess': {
-    conn.menfes = conn.menfes ?? {};
-    const find = Object.values(conn.menfes).find(menpes => [menpes.a, menpes.b].includes(m.sender));
-    if (!find) return reply("Belum ada sesi menfess");
-
-    const to = find.a === m.sender ? find.b : find.a;
-    await conn.sendMessage(to, {
-        text: "_Sesi menfess ini telah dihentikan._",
-        mentions: [m.sender],
-    });
-    reply("Sesi menfess dihentikan.");
-    delete conn.menfes[find.id];
-}
-break;
-           
 case 'remini':
   case 'hd':
     case 'hdr': {
